@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 4000;
 const allowedOrigins = (
   process.env.FRONTEND_ORIGINS ||
   process.env.FRONTEND_ORIGIN ||
-  'http://localhost:3000,http://localhost:3001'
+  '*'
 )
   .split(',')
   .map((o) => o.trim())
@@ -27,7 +27,17 @@ app.use(
   cors({
     origin(origin, callback) {
       // Allow same-origin / tools without Origin header (curl, Postman)
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (!origin) return callback(null, true);
+
+      // If '*' is in allowedOrigins or not strictly specified
+      if (allowedOrigins.includes('*') || process.env.NODE_ENV !== 'production') {
+        return callback(null, true);
+      }
+
+      if (
+        allowedOrigins.includes(origin) ||
+        /^https?:\/\/(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(1[6-9]|2[0-9]|3[0-1])\.\d+\.\d+)(:\d+)?$/.test(origin)
+      ) {
         return callback(null, true);
       }
       return callback(null, false);
