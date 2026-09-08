@@ -47,25 +47,37 @@ app.use(
 );
 app.use(express.json());
 
-app.get('/health', async (req, res) => {
+const healthHandler = async (req, res) => {
   try {
     const now = await checkConnection();
     return ok(res, { status: 'ok', database: 'connected', time: now });
   } catch (err) {
     return fail(res, `Database unavailable: ${err.message}`, 503);
   }
-});
+};
 
-app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/customers', customerRoutes);
-app.use('/api/v1/receptions', receptionRoutes);
-app.use('/api/v1/pricing', pricingRoutes);
-app.use('/api/v1/dashboard', dashboardRoutes);
+app.get('/health', healthHandler);
+app.get('/api/health', healthHandler);
+app.get('/api/v1/health', healthHandler);
+
+const apiRouter = express.Router();
+apiRouter.use('/auth', authRoutes);
+apiRouter.use('/customers', customerRoutes);
+apiRouter.use('/receptions', receptionRoutes);
+apiRouter.use('/pricing', pricingRoutes);
+apiRouter.use('/dashboard', dashboardRoutes);
+
+app.use('/api/v1', apiRouter);
+app.use('/v1', apiRouter);
 
 app.use((req, res) => fail(res, 'Not found', 404));
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.log(`🫒 OliveFlow API running on http://localhost:${PORT}`);
-  console.log(`   Health: http://localhost:${PORT}/health`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`🫒 OliveFlow API running on http://localhost:${PORT}`);
+    console.log(`   Health: http://localhost:${PORT}/health`);
+  });
+}
+
+module.exports = app;
