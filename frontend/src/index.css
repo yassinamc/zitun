@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Cairo", ui-sans-serif, system-ui, sans-serif;
+  --color-olive-950: #141910;
+  --color-olive-900: #161B12;
+  --color-olive-850: #1C2414;
+  --color-olive-800: #28341E;
+  --color-olive-700: #4B6038;
+  --color-olive-600: #5F7B46;
+  --color-olive-500: #7E9D61;
+  --color-gold-600: #D49312;
+  --color-gold-500: #E5A620;
+  --color-gold-400: #F4BE49;
+  --color-clay-700: #7E5132;
+  --color-clay-800: #643F25;
+  --color-clay-900: #4A2E1B;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: radial-gradient(ellipse at top, #28341e 0%, #141910 55%, #0f130c 100%);
+  color: #e8efe0;
+}
+
+input,
+select,
+button,
+textarea {
+  font-family: inherit;
+}
+
+.touch-input {
+  font-size: 1.5rem;
+  padding: 1rem 1.25rem;
+  border-radius: 1rem;
+  border: 2px solid #4b6038;
+  background: #1c2414;
+  color: #f4f7ef;
+  width: 100%;
+}
+
+.touch-input:focus {
+  outline: none;
+  border-color: #d49312;
+  box-shadow: 0 0 0 3px rgba(212, 147, 18, 0.25);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #5f7b46, #4b6038);
+  color: white;
+  font-weight: 700;
+  padding: 0.9rem 1.5rem;
+  border-radius: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, #f4be49, #d49312);
+  color: #1c2414;
+  font-weight: 800;
+  padding: 1rem 1.5rem;
+  border-radius: 1rem;
+  border: none;
+  cursor: pointer;
+}
+
+.card-orchard {
+  background: linear-gradient(160deg, rgba(40, 52, 30, 0.95), rgba(28, 36, 20, 0.9));
+  border: 1px solid rgba(126, 157, 97, 0.35);
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+}
