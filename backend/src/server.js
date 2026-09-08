@@ -69,6 +69,8 @@ apiRouter.use('/dashboard', dashboardRoutes);
 
 app.use('/api/v1', apiRouter);
 app.use('/v1', apiRouter);
+app.use('/api', apiRouter);
+app.use('/', apiRouter);
 
 app.use((req, res) => fail(res, 'Not found', 404));
 app.use(errorHandler);
